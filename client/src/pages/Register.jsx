@@ -15,7 +15,7 @@ const Register = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/events/list`);
+        const res = await axios.get(`https://qr-generator-verify-system.onrender.com/api/events/list`);
         const currentEvent = res.data.find(e => e._id === eventId);
         setEvent(currentEvent);
         
@@ -38,7 +38,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/attendees/register', {
+      const res = await axios.post('https://qr-generator-verify-system.onrender.com/api/attendees/register', {
         eventId,
         formData
       });

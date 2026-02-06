@@ -14,7 +14,7 @@ const Dashboard = () => {
   // 1. Fetch all events for the dropdown
   useEffect(() => {
     const fetchEvents = async () => {
-      const res = await axios.get('http://localhost:5000/api/events/list');
+      const res = await axios.get('https://qr-generator-verify-system.onrender.com/api/events/list');
       setEvents(res.data);
     };
     fetchEvents();
@@ -27,7 +27,7 @@ const Dashboard = () => {
     const fetchStats = async () => {
       if (!selectedEventId) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/events/stats/${selectedEventId}`);
+        const res = await axios.get(`https://qr-generator-verify-system.onrender.com/api/events/stats/${selectedEventId}`);
         const { entry, exit, scammers } = res.data;
 
         // Transform API data into Recharts format

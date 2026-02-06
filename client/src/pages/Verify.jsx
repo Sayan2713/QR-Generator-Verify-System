@@ -21,7 +21,7 @@ const Verify = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/events/list');
+        const res = await axios.get('https://qr-generator-verify-system.onrender.com/api/events/list');
         setEvents(res.data);
       } catch (err) {
         console.error("Error fetching events", err);
@@ -82,7 +82,7 @@ const Verify = () => {
    */
   const handleVerification = async (qrId) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/verify/scan', {
+      const res = await axios.post('https://qr-generator-verify-system.onrender.com/api/verify/scan', {
         qrCodeId: qrId,
         eventName: selectedEvent,
         action: 'Verified By Admin'
@@ -120,7 +120,7 @@ const Verify = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/verify/scan', {
+      const res = await axios.post('https://qr-generator-verify-system.onrender.com/api/verify/scan', {
         qrCodeId: qrId,
         eventName: selectedEvent,
         action: finalAction

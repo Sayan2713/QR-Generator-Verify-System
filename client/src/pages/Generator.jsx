@@ -21,7 +21,7 @@ const Generator = () => {
   // Fetch Old Records from MongoDB
   const fetchEvents = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/events/list');
+      const res = await axios.get('https://qr-generator-verify-system.onrender.com/api/events/list');
       setOldRecords(res.data);
     } catch (err) {
       console.error("Error fetching events", err);
@@ -48,7 +48,7 @@ const Generator = () => {
     e.stopPropagation(); // Prevent navigating to registration
     if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
       try {
-        await axios.delete(`http://localhost:5000/api/events/${id}`);
+        await axios.delete(`https://qr-generator-verify-system.onrender.com/api/events/${id}`);
         alert("Record deleted successfully.");
         fetchEvents(); // Refresh the list
       } catch (err) {
@@ -81,7 +81,7 @@ const Generator = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/events/create', {
+      await axios.post('https://qr-generator-verify-system.onrender.com/api/events/create', {
         name: eventName,
         fields: selectedFields
       });
