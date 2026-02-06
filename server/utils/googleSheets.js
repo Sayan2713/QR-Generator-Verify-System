@@ -1,7 +1,7 @@
 const { google } = require('googleapis');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
-const creds = require('../google-key.json'); // Ensure this file is in your server folder
+// const creds = require('../google-key.json'); // Ensure this file is in your server folder
 
 // Helper to initialize the Google Auth
 const getAuth = () => {
