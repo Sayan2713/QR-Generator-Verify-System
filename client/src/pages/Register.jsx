@@ -126,7 +126,7 @@ const Register = () => {
       
       <div className="mt-12 opacity-50">
         <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest text-center">
-          Powered by QR Master Protocol
+          Powered by Sayan
         </p>
       </div>
     </div>

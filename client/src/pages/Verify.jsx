@@ -100,8 +100,7 @@ const Verify = () => {
 
   /**
    * handleAction:
-   * Triggers the Excel update. If your backend is set up for sequential status,
-   * clicking this multiple times will create Status, Status2, etc.
+   * Triggers the Excel update. Includes the requested alert and auto-reset functionality.
    */
   const handleAction = async (actionType) => {
     const finalAction = actionType === 'CUSTOM' ? customAction : actionType;
@@ -120,21 +119,24 @@ const Verify = () => {
     }
 
     try {
-      const res = await axios.post('https://qr-generator-verify-system.onrender.com/api/verify/scan', {
+      await axios.post('https://qr-generator-verify-system.onrender.com/api/verify/scan', {
         qrCodeId: qrId,
         eventName: selectedEvent,
         action: finalAction
       });
       
-      // Update the local log so you can see the sequence on screen
+      // Update local tracking (optional, but kept for consistency)
       setActionLog(prev => [...prev, finalAction]);
       setCustomAction("");
       
-      // Success visual feedback
-      console.log("Excel Updated:", finalAction);
+      // 1. SHOW SUCCESS ALERT
+      alert(`Success: Status updated to "${finalAction}" in Excel.`);
+      
+      // 2. AUTO REDUCE (RESET) TO SCAN PAGE
+      handleReset();
+      
     } catch (err) {
       console.error("Update Error:", err);
-      // Detailed error alert to help debug backend connection
       const errorMsg = err.response?.data?.message || "Check your backend server and Google Sheets connection.";
       alert(`Action failed to update: ${errorMsg}`);
     }
@@ -209,14 +211,12 @@ const Verify = () => {
           </div>
         ) : (
           <div className="space-y-10 animate-in zoom-in duration-500">
-            {/* Authenticated User Banner */}
             <div className="text-center p-10 bg-white rounded-[3rem] shadow-[inset_12px_12px_24px_#e2e8f0,inset_-12px_-12px_24px_#ffffff] border border-white">
                <CheckCircle size={72} className="text-emerald-500 mx-auto mb-6" />
                <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.4em] mb-2">Authenticated User</p>
                <h3 className="text-4xl font-black tracking-tighter leading-none">{scanResult.userName || "Attendee"}</h3>
             </div>
 
-            {/* Quick Status Actions */}
             <div className="grid grid-cols-2 gap-5">
               <button onClick={() => handleAction('Enter To Event')} className="flex flex-col items-center p-7 bg-blue-50 rounded-[2.5rem] hover:bg-blue-100 transition-all border border-blue-100 group active:scale-95 shadow-sm">
                 <LogIn className="text-blue-600 mb-3 group-hover:scale-110 transition-transform" />
@@ -236,7 +236,6 @@ const Verify = () => {
               </button>
             </div>
 
-            {/* Status History Display */}
             {actionLog.length > 0 && (
               <div className="p-7 bg-gray-50 rounded-[2rem] shadow-inner border border-gray-100">
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.4em] mb-5 flex items-center gap-2">
@@ -252,7 +251,6 @@ const Verify = () => {
               </div>
             )}
 
-            {/* Manual New Field Input */}
             <div className="pt-10 border-t-2 border-gray-100">
                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.4em] ml-6 mb-5">Manual Append (New Excel Col)</label>
                <div className="flex gap-5">
@@ -270,7 +268,6 @@ const Verify = () => {
                     <Plus size={28} strokeWidth={3} />
                   </button>
                </div>
-               <p className="text-[10px] text-gray-400 mt-4 ml-6 italic font-medium">Click + to add a unique status column for this user in Excel.</p>
             </div>
           </div>
         )}
